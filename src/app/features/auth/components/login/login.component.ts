@@ -116,10 +116,10 @@ export class LoginComponent {
 
     switch (user.role) {
       case UserRole.ADMIN:
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/home']);
         break;
       case UserRole.SUPERVISOR:
-        this.router.navigate(['/produccion']);
+        this.router.navigate(['/home']);
         break;
       case UserRole.BODEGA:
         this.router.navigate(['/inventario']);
