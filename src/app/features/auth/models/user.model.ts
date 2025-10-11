@@ -1,11 +1,29 @@
+// src/app/features/auth/models/user.model.ts
 export interface User {
-  id: number;
+  id?: string;
   name: string;
   email: string;
   role: UserRole;
-  permissions: Permission[];
   registerDate: Date;
-  token: string;
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  token?: string;
+}
+
+export interface CreateUserRequest {
+  name: string;
+  email: string;
+  password: string;
+  role: UserRole;
+}
+
+export interface UpdateUserRequest {
+  name?: string;
+  email?: string;
+  password?: string;
+  role?: UserRole;
+  isActive?: boolean;
 }
 
 export interface LoginRequest {
@@ -13,8 +31,31 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface UserResponse {
+  id?: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  registerDate: Date;
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface UsersListResponse {
+  success: boolean;
+  data: UserResponse[];
+  total: number;
+}
+
+export interface UserActionResponse {
+  success: boolean;
+  message: string;
+  data?: UserResponse;
+}
+
 export interface AuthResponse {
-  user: User;
+  user: UserResponse;
   token: string;
   success: boolean;
   message: string;
@@ -51,6 +92,14 @@ export enum Permission {
   USER_MANAGE = 'user:manage',
   SYSTEM_CONFIG = 'system:config'
 }
+
+// Labels para mostrar en la interfaz
+export const UserRoleLabels: { [key in UserRole]: string } = {
+  [UserRole.ADMIN]: 'Administrador',
+  [UserRole.SUPERVISOR]: 'Supervisor',
+  [UserRole.OPERARIO]: 'Operario',
+  [UserRole.BODEGA]: 'Bodega'
+};
 
 // Mapeo de roles a permisos para Sr. Rana
 export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {

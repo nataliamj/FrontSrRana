@@ -122,13 +122,13 @@ export class LoginComponent {
         this.router.navigate(['/home']);
         break;
       case UserRole.BODEGA:
-        this.router.navigate(['/inventario']);
+        this.router.navigate(['/home']);
         break;
       case UserRole.OPERARIO:
-        this.router.navigate(['/produccion']);
+        this.router.navigate(['/home']);
         break;
       default:
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/home']);
     }
   }
 }

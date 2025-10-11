@@ -9,14 +9,14 @@ import { CommonModule } from '@angular/common';
   template: `
     <header class="w-full bg-gray-800/80 backdrop-blur-lg border-b border-gray-600/50 shadow-lg">
       <div class="flex items-center justify-between p-4">
-        <!-- Título de página - Ahora más genérico -->
+        <!-- Título de página -->
         <div>
           <h2 class="text-xl font-semibold text-white">Sr. Rana - Sistema de Gestión</h2>
         </div>
 
         <!-- User menu -->
         <div class="flex items-center space-x-4">
-          @if (authService.isAuthenticated()) {
+          @if (isAuthenticated()) {
             <div class="relative">
               <!-- Botón del menú desplegable -->
               <button 
@@ -25,10 +25,10 @@ import { CommonModule } from '@angular/common';
               >
                 <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-md">
                   <span class="text-white text-sm font-medium">
-                    {{ authService.currentUser()?.name?.charAt(0) }}
+                    {{ currentUser()?.name?.charAt(0) }}
                   </span>
                 </div>
-                <span class="text-white text-sm font-medium">{{ authService.currentUser()?.name }}</span>
+                <span class="text-white text-sm font-medium">{{ currentUser()?.name }}</span>
                 <!-- Flecha indicadora -->
                 <svg 
                   [class.rotate-180]="isDropdownOpen" 
@@ -79,6 +79,17 @@ import { CommonModule } from '@angular/common';
                 (click)="closeDropdown()"
               ></div>
             }
+          } @else {
+            <!-- Botón de login cuando no está autenticado -->
+            <a 
+              routerLink="/auth/login"
+              class="bg-gradient-to-r from-green-600 to-emerald-700 text-white px-4 py-2 rounded-lg hover:from-green-700 hover:to-emerald-800 transition-all duration-200 shadow-lg flex items-center space-x-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+              </svg>
+              <span>Iniciar Sesión</span>
+            </a>
           }
         </div>
       </div>
@@ -90,6 +101,10 @@ export class HeaderComponent {
   authService = inject(AuthService);
   isDropdownOpen = false;
 
+  // ✅ Exponer las signals del servicio
+  isAuthenticated = this.authService.isAuthenticated;
+  currentUser = this.authService.currentUser;
+
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
@@ -99,10 +114,8 @@ export class HeaderComponent {
   }
 
   goToProfile() {
-    // Aquí puedes navegar al perfil del usuario
     console.log('Navegar al perfil');
     this.closeDropdown();
-    // this.router.navigate(['/perfil']);
   }
 
   logout() {
