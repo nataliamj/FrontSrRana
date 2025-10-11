@@ -1,4 +1,3 @@
-// src/app/features/auth/components/audit-list/audit-list.component.ts
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -311,7 +310,7 @@ interface AuditFilters {
   styles: ``
 })
 export class AuditListComponent implements OnInit {
-  // ✅ Cambiar de private a public para que sea accesible desde el template
+  
   authService = inject(AuthService);
   private datePipe = inject(DatePipe);
 
@@ -356,7 +355,6 @@ export class AuditListComponent implements OnInit {
     this.loadAuditLogs();
   }
 
-  // ✅ Método helper para obtener inicial del usuario
   getUserInitial(userName: string): string {
     return userName ? userName.charAt(0) : 'U';
   }
@@ -385,16 +383,16 @@ export class AuditListComponent implements OnInit {
     return classes[actionType] || 'bg-gray-500/20 text-gray-300 border-gray-500/30';
   }
 
-  // ✅ Método helper para verificar rol de admin
+
   hasAdminRole(): boolean {
     return this.authService.hasRole(UserRole.ADMIN);
   }
 
   viewLogDetails(log: AuditLog): void {
-    // Aquí puedes implementar un modal o diálogo para mostrar detalles completos
+    // Falta agregar modal para mas detalles de auditoria 
     console.log('View log details:', log);
     
-    // Mostrar detalles en un alert por ahora (puedes reemplazar con un modal)
+    // Mostrar detalles en un alert por ahora
     const details = `
       Usuario: ${log.userName} (${log.userEmail})
       Acción: ${this.getActionLabel(log.actionType)}
@@ -409,13 +407,12 @@ export class AuditListComponent implements OnInit {
   }
 
   exportAuditLogs(): void {
-    // Implementar exportación de logs
+
     console.log('Exporting audit logs...');
-    // Aquí puedes implementar la lógica para exportar a CSV, PDF, etc.
+    // Lógica para exportar a CSV, PDF o lo que sea AÑADIR
   }
 
   exportSingleLog(log: AuditLog): void {
-    // Implementar exportación de un log específico
     console.log('Exporting single log:', log);
   }
 }

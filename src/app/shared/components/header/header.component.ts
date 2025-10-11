@@ -101,7 +101,6 @@ export class HeaderComponent {
   authService = inject(AuthService);
   isDropdownOpen = false;
 
-  // ✅ Exponer las signals del servicio
   isAuthenticated = this.authService.isAuthenticated;
   currentUser = this.authService.currentUser;
 

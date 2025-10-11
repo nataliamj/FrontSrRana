@@ -1,4 +1,4 @@
-// src/app/features/auth/auth.routes.ts
+
 import { Routes } from '@angular/router';
 import { authGuard } from '../../guards/auth.guard';
 import { roleGuard } from '../../guards/role.guard';
@@ -14,7 +14,7 @@ export const authRoutes: Routes = [
         path: 'login',
         loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent) 
     },
-    // Rutas de gestión de usuarios dentro de auth
+
     {
         path: 'usuarios',
         loadComponent: () => import('./components/users-list/users-list.component').then(m => m.UsersListComponent),

@@ -1,7 +1,7 @@
-// src/app/features/auth/services/auth.service.ts
+
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router'; // ← Agregar esta importación
+import { Router } from '@angular/router'; 
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { 
@@ -21,20 +21,20 @@ import {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
-  private router = inject(Router); // ← Inyectar Router aquí
+  private router = inject(Router); 
   private apiUrl = environment.apiUrl;
   
   // State management con Signals
   private currentUserSignal = signal<User | null>(null);
   public currentUser = this.currentUserSignal.asReadonly();
   
-  private isAuthenticatedSignal = signal<boolean>(false); // ← Signal separado para autenticación
+  private isAuthenticatedSignal = signal<boolean>(false); 
   public isAuthenticated = this.isAuthenticatedSignal.asReadonly();
   
   public isLoading = signal(false);
   public errorMessage = signal('');
 
-  // Computed values para permisos y roles
+
   public userPermissions = computed(() => {
     const user = this.currentUser();
     const role = user?.role as UserRole;
@@ -49,7 +49,6 @@ export class AuthService {
     this.checkStoredToken();
   }
 
-  // ========== MÉTODOS DE AUTENTICACIÓN ==========
 
   async login(credentials: LoginRequest): Promise<boolean> {
     this.isLoading.set(true);
@@ -62,7 +61,7 @@ export class AuthService {
       
       if (response?.success) {
         this.currentUserSignal.set(response.user);
-        this.isAuthenticatedSignal.set(true); // ← Actualizar signal de autenticación
+        this.isAuthenticatedSignal.set(true); 
         localStorage.setItem('auth_token', response.token);
         localStorage.setItem('user_data', JSON.stringify(response.user));
         return true;
@@ -84,9 +83,9 @@ export class AuthService {
     }
   }
 
-  // ========== MÉTODOS DE GESTIÓN DE USUARIOS ==========
 
-  // Obtener todos los usuarios
+
+
   getAllUsers(includeInactive: boolean = false): Observable<UsersListResponse> {
     let params = new HttpParams();
     if (includeInactive) {
@@ -96,22 +95,18 @@ export class AuthService {
     return this.http.get<UsersListResponse>(`${this.apiUrl}/users`, { params });
   }
 
-  // Obtener usuario por ID
   getUserById(id: string): Observable<{ success: boolean; data: UserResponse }> {
     return this.http.get<{ success: boolean; data: UserResponse }>(`${this.apiUrl}/users/${id}`);
   }
 
-  // Crear usuario
   createUser(userData: CreateUserRequest): Observable<UserActionResponse> {
     return this.http.post<UserActionResponse>(`${this.apiUrl}/users`, userData);
   }
 
-  // Actualizar usuario
   updateUser(id: string, userData: UpdateUserRequest): Observable<UserActionResponse> {
     return this.http.put<UserActionResponse>(`${this.apiUrl}/users/${id}`, userData);
   }
 
-  // Desactivar usuario
   deactivateUser(id: string): Observable<{ success: boolean; message: string }> {
     return this.http.patch<{ success: boolean; message: string }>(
       `${this.apiUrl}/users/${id}/deactivate`, 
@@ -119,7 +114,6 @@ export class AuthService {
     );
   }
 
-  // Activar usuario
   activateUser(id: string): Observable<{ success: boolean; message: string }> {
     return this.http.patch<{ success: boolean; message: string }>(
       `${this.apiUrl}/users/${id}/activate`, 
@@ -127,14 +121,10 @@ export class AuthService {
     );
   }
 
-  // Obtener perfil del usuario actual
   getProfile(): Observable<{ success: boolean; data: UserResponse }> {
     return this.http.get<{ success: boolean; data: UserResponse }>(`${this.apiUrl}/users/profile/me`);
   }
 
-  // ========== MÉTODOS DE VERIFICACIÓN ==========
-
-  // Verificar permisos
   hasPermission(permission: Permission): boolean {
     return this.userPermissions().includes(permission);
   }
@@ -147,7 +137,6 @@ export class AuthService {
     return permissions.every(permission => this.hasPermission(permission));
   }
 
-  // Verificar rol
   hasRole(role: UserRole): boolean {
     return this.userRole() === role;
   }
@@ -157,7 +146,7 @@ export class AuthService {
     return userRole ? roles.includes(userRole) : false;
   }
 
-  // ========== MÉTODOS PRIVADOS ==========
+
 
   private checkStoredToken(): void {
     const token = localStorage.getItem('auth_token');
@@ -167,7 +156,7 @@ export class AuthService {
       try {
         const user: User = JSON.parse(userData);
         this.currentUserSignal.set(user);
-        this.isAuthenticatedSignal.set(true); // ← Actualizar autenticación
+        this.isAuthenticatedSignal.set(true); 
       } catch (error) {
         this.logout();
       }
@@ -175,24 +164,23 @@ export class AuthService {
   }
 
   logout(): void {
-    // Limpiar datos de autenticación
-    localStorage.removeItem('auth_token'); // ← Corregir nombre de la key
+    
+    localStorage.removeItem('auth_token'); 
     localStorage.removeItem('user_data');
     
-    // Limpiar el estado actual - CORREGIDO
-    this.currentUserSignal.set(null); // ← Usar el signal directamente
-    this.isAuthenticatedSignal.set(false); // ← Usar el signal directamente
+    this.currentUserSignal.set(null);
+    this.isAuthenticatedSignal.set(false); 
     
     console.log('🔐 Sesión cerrada - Redirigiendo a login');
     
-    // ✅ Redirigir a la página de login
+
     this.router.navigate(['/auth/login']);
   }
 
   getAuditLogs(filters: any = {}): Observable<any> {
     let params = new HttpParams();
     
-    // Agregar filtros a los parámetros
+  
     Object.keys(filters).forEach(key => {
       if (filters[key] !== undefined && filters[key] !== null && filters[key] !== '') {
         params = params.set(key, filters[key].toString());

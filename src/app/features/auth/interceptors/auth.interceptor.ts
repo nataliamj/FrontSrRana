@@ -6,10 +6,10 @@ export const authInterceptor: HttpInterceptorFn = (
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
   
-  // Obtener el token del localStorage
+  // token en local storage
   const token = localStorage.getItem('auth_token');
   
-  // Si hay token, clonar la request y añadir el header Authorization
+  // Si hay token
   if (token) {
     const authReq = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${token}`)
@@ -17,6 +17,6 @@ export const authInterceptor: HttpInterceptorFn = (
     return next(authReq);
   }
   
-  // Si no hay token, continuar con la request original
+  // Si no hay token
   return next(req);
 };

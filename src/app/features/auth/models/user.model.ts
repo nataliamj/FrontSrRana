@@ -1,4 +1,3 @@
-// src/app/features/auth/models/user.model.ts
 export interface User {
   id?: string;
   name: string;
@@ -61,7 +60,7 @@ export interface AuthResponse {
   message: string;
 }
 
-// Roles del sistema Sr. Rana
+// Roles del sistema
 export enum UserRole {
   ADMIN = 'admin',
   SUPERVISOR = 'supervisor',
@@ -69,31 +68,31 @@ export enum UserRole {
   BODEGA = 'bodega'
 }
 
-// Permisos específicos para Sr. Rana
+// Permisos específicos
 export enum Permission {
-  // Inventario - RF1, RF2
+  // Inventario 
   MATERIAL_READ = 'material:read',
   MATERIAL_WRITE = 'material:write',
   MATERIAL_DELETE = 'material:delete',
   
-  // Producción - RF3, RF4, RF5
+  // Producción
   PRODUCTION_READ = 'production:read',
   PRODUCTION_WRITE = 'production:write',
   PRODUCTION_UPDATE = 'production:update',
   
-  // Reportes - RF6, RF7
+  // Reportes
   REPORTS_READ = 'reports:read',
   REPORTS_EXPORT = 'reports:export',
   
-  // Auditoría - RF8
+  // Auditoría
   AUDIT_READ = 'audit:read',
   
-  // Administración
+  // Administración 
   USER_MANAGE = 'user:manage',
   SYSTEM_CONFIG = 'system:config'
 }
 
-// Labels para mostrar en la interfaz
+
 export const UserRoleLabels: { [key in UserRole]: string } = {
   [UserRole.ADMIN]: 'Administrador',
   [UserRole.SUPERVISOR]: 'Supervisor',
@@ -101,7 +100,7 @@ export const UserRoleLabels: { [key in UserRole]: string } = {
   [UserRole.BODEGA]: 'Bodega'
 };
 
-// Mapeo de roles a permisos para Sr. Rana
+
 export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
   [UserRole.ADMIN]: [
     Permission.MATERIAL_READ, Permission.MATERIAL_WRITE, Permission.MATERIAL_DELETE,

@@ -1,4 +1,3 @@
-// src/app/features/auth/components/user-form/user-form.component.ts
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -190,7 +189,6 @@ export class UserFormComponent implements OnInit {
       this.isEditMode.set(true);
       this.userId.set(id);
       this.loadUserData(id);
-      // En modo edición, la contraseña no es requerida
       this.userForm.get('password')?.clearValidators();
       this.userForm.get('password')?.updateValueAndValidity();
     }

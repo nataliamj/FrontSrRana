@@ -136,7 +136,6 @@ export class SidebarComponent {
   authService = inject(AuthService);
   router = inject(Router);
 
-  // ✅ Exponer las signals del servicio para que el template reaccione
   isAuthenticated = this.authService.isAuthenticated;
   currentUser = this.authService.currentUser;
 
