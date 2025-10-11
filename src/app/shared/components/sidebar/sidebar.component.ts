@@ -62,7 +62,7 @@ import { CommonModule } from '@angular/common';
 
         <!-- Auditoría -->
         <a 
-          routerLink="/auditoria" 
+          routerLink="/auth/auditoria" 
           routerLinkActive="bg-green-600/80 text-white shadow-lg"
           class="flex items-center px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-700/80 hover:text-white hover:shadow-md transition-all duration-200 group"
         >

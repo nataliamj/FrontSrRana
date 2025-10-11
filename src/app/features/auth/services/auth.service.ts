@@ -188,4 +188,17 @@ export class AuthService {
     // ✅ Redirigir a la página de login
     this.router.navigate(['/auth/login']);
   }
+
+  getAuditLogs(filters: any = {}): Observable<any> {
+    let params = new HttpParams();
+    
+    // Agregar filtros a los parámetros
+    Object.keys(filters).forEach(key => {
+      if (filters[key] !== undefined && filters[key] !== null && filters[key] !== '') {
+        params = params.set(key, filters[key].toString());
+      }
+    });
+
+    return this.http.get<any>(`${this.apiUrl}/users/audit/logs`, { params });
+  }
 }

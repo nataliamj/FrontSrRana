@@ -29,5 +29,9 @@ export const authRoutes: Routes = [
         path: 'usuarios/editar/:id',
         loadComponent: () => import('./components/user-form/user-form.component').then(m => m.UserFormComponent),
         canActivate: [authGuard, roleGuard([UserRole.ADMIN])]
-    }
+    },
+    {path: 'auditoria',
+    loadComponent: () => import('./components/audit-list/audit-list.component').then(m => m.AuditListComponent),
+    canActivate: [authGuard, roleGuard([UserRole.ADMIN, UserRole.SUPERVISOR])]
+  }
 ];
