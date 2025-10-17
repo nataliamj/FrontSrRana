@@ -11,6 +11,17 @@ export const routes: Routes = [
         loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent)
     },
 
+   { 
+        path: 'suppliers', 
+        loadChildren: () => import('./features/supplier/supplier.routes').then(m => m.suppliersRoutes)
+    },
+
+    // Agregar esta ruta a tus rutas principales
+    {
+    path: 'materials',
+    loadChildren: () => import('./features/material/material.module').then(m => m.MaterialsModule)
+    },
+
 
     { 
         path: '', 

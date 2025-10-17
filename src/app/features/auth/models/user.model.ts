@@ -1,5 +1,6 @@
 export interface User {
   id?: string;
+  user_code: string;
   name: string;
   email: string;
   role: UserRole;
@@ -11,6 +12,8 @@ export interface User {
 }
 
 export interface CreateUserRequest {
+  user_code: string; 
+
   name: string;
   email: string;
   password: string;
@@ -18,6 +21,8 @@ export interface CreateUserRequest {
 }
 
 export interface UpdateUserRequest {
+  user_code?: string; // 
+
   name?: string;
   email?: string;
   password?: string;
@@ -32,6 +37,7 @@ export interface LoginRequest {
 
 export interface UserResponse {
   id?: string;
+  user_code: string; 
   name: string;
   email: string;
   role: UserRole;
@@ -66,6 +72,10 @@ export enum UserRole {
   SUPERVISOR = 'supervisor',
   OPERARIO = 'operario',
   BODEGA = 'bodega'
+}
+export interface NextCodeResponse {
+  success: boolean;
+  nextCode: string;
 }
 
 // Permisos específicos

@@ -84,7 +84,13 @@ export class AuthService {
   }
 
 
+  generateTempUserCode(): string {
+    const timestamp = Date.now().toString().slice(-6);
+    const random = Math.random().toString(36).substring(2, 5).toUpperCase();
+    return `USER${timestamp}${random}`;
+  }
 
+  
 
   getAllUsers(includeInactive: boolean = false): Observable<UsersListResponse> {
     let params = new HttpParams();

@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
-import { AuthService } from '../../services/auth.service';
-import { UserRole, UserRoleLabels, CreateUserRequest, UpdateUserRequest } from '../../models/user.model';
+import { SupplierService } from '../../services/supplier.service';
+import { AuthService } from '../../../auth/services/auth.service';
+import { CreateSupplierRequest, UpdateSupplierRequest } from '../../models/supplier.model';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar.component';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 
 @Component({
-  selector: 'app-user-form',
+  selector: 'app-supplier-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, SidebarComponent, HeaderComponent],
   template: `
@@ -32,29 +33,40 @@ import { HeaderComponent } from '../../../../shared/components/header/header.com
               <!-- Header -->
               <div class="mb-8">
                 <h1 class="text-3xl font-bold text-white mb-2">
-                  {{ isEditMode() ? 'Editar Usuario' : 'Nuevo Usuario' }}
+                  {{ isEditMode() ? 'Editar Proveedor' : 'Nuevo Proveedor' }}
                 </h1>
                 <p class="text-gray-400">
-                  {{ isEditMode() ? 'Modifica la información del usuario' : 'Agrega un nuevo usuario al sistema' }}
+                  {{ isEditMode() ? 'Modifica la información del proveedor' : 'Agrega un nuevo proveedor al sistema' }}
                 </p>
               </div>
 
               <!-- Form Card -->
               <div class="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl p-8">
-                <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="space-y-6">
+                <form [formGroup]="supplierForm" (ngSubmit)="onSubmit()" class="space-y-6">
                   
                   <!-- Name -->
                   <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Nombre Completo</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Nombre del Proveedor *</label>
                     <input 
                       type="text" 
                       formControlName="name"
                       class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-                      placeholder="Ingresa el nombre completo"
+                      placeholder="Ingresa el nombre del proveedor"
                     >
-                    @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+                    @if (supplierForm.get('name')?.invalid && supplierForm.get('name')?.touched) {
                       <p class="text-red-400 text-sm mt-1">El nombre es requerido</p>
                     }
+                  </div>
+
+                  <!-- Contact Name -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Nombre de Contacto</label>
+                    <input 
+                      type="text" 
+                      formControlName="contactName"
+                      class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                      placeholder="Persona de contacto"
+                    >
                   </div>
 
                   <!-- Email -->
@@ -64,44 +76,33 @@ import { HeaderComponent } from '../../../../shared/components/header/header.com
                       type="email" 
                       formControlName="email"
                       class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-                      placeholder="usuario@srrana.com"
+                      placeholder="proveedor@empresa.com"
                     >
-                    @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+                    @if (supplierForm.get('email')?.invalid && supplierForm.get('email')?.touched) {
                       <p class="text-red-400 text-sm mt-1">Email válido requerido</p>
                     }
                   </div>
 
-                  <!-- Password (solo para crear) -->
-                  @if (!isEditMode()) {
-                    <div>
-                      <label class="block text-sm font-medium text-gray-300 mb-2">Contraseña</label>
-                      <input 
-                        type="password" 
-                        formControlName="password"
-                        class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-                        placeholder="••••••••"
-                      >
-                      @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
-                        <p class="text-red-400 text-sm mt-1">La contraseña es requerida (mínimo 6 caracteres)</p>
-                      }
-                    </div>
-                  }
-
-                  <!-- Role -->
+                  <!-- Phone -->
                   <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Rol</label>
-                    <select 
-                      formControlName="role"
-                      class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Teléfono</label>
+                    <input 
+                      type="tel" 
+                      formControlName="phone"
+                      class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                      placeholder="+57 300 123 4567"
                     >
-                      <option value="" disabled selected>Selecciona un rol</option>
-                      @for (role of userRoles; track role) {
-                        <option [value]="role">{{ UserRoleLabels[role] }}</option>
-                      }
-                    </select>
-                    @if (userForm.get('role')?.invalid && userForm.get('role')?.touched) {
-                      <p class="text-red-400 text-sm mt-1">El rol es requerido</p>
-                    }
+                  </div>
+
+                  <!-- Address -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Dirección</label>
+                    <textarea 
+                      formControlName="address"
+                      rows="3"
+                      class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition resize-none"
+                      placeholder="Dirección completa del proveedor"
+                    ></textarea>
                   </div>
 
                   <!-- Status (solo para editar) -->
@@ -113,7 +114,7 @@ import { HeaderComponent } from '../../../../shared/components/header/header.com
                           formControlName="isActive"
                           class="w-4 h-4 text-green-600 bg-gray-800 border-gray-600 rounded focus:ring-green-500 focus:ring-2"
                         >
-                        <span>Usuario activo</span>
+                        <span>Proveedor activo</span>
                       </label>
                     </div>
                   }
@@ -129,7 +130,7 @@ import { HeaderComponent } from '../../../../shared/components/header/header.com
                   <div class="flex items-center justify-between pt-6">
                     <button
                       type="button"
-                      routerLink="/auth/usuarios"
+                      routerLink="/proveedores"
                       class="px-6 py-3 text-gray-300 hover:text-white transition-colors rounded-xl hover:bg-white/10 border border-gray-600"
                     >
                       Cancelar
@@ -137,14 +138,14 @@ import { HeaderComponent } from '../../../../shared/components/header/header.com
 
                     <button 
                       type="submit" 
-                      [disabled]="userForm.invalid || loading()"
+                      [disabled]="supplierForm.invalid || loading()"
                       class="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-700 text-white rounded-xl hover:from-green-700 hover:to-emerald-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
                     >
                       @if (loading()) {
                         <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                         <span>{{ isEditMode() ? 'Actualizando...' : 'Creando...' }}</span>
                       } @else {
-                        <span>{{ isEditMode() ? 'Actualizar Usuario' : 'Crear Usuario' }}</span>
+                        <span>{{ isEditMode() ? 'Actualizar Proveedor' : 'Crear Proveedor' }}</span>
                       }
                     </button>
                   </div>
@@ -158,111 +159,97 @@ import { HeaderComponent } from '../../../../shared/components/header/header.com
   `,
   styles: ``
 })
-export class UserFormComponent implements OnInit {
+export class SupplierFormComponent implements OnInit {
   private fb = inject(FormBuilder);
-  private authService = inject(AuthService);
+  private supplierService = inject(SupplierService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  userForm: FormGroup;
+  supplierForm: FormGroup;
   loading = signal(false);
   errorMessage = signal('');
   isEditMode = signal(false);
-  userId = signal<string | null>(null);
+  supplierId = signal<string | null>(null);
 
-  readonly UserRoleLabels = UserRoleLabels;
-  readonly userRoles = Object.values(UserRole);
- constructor() {
-    this.userForm = this.fb.group({
-      user_code: [this.generateUserCode(), Validators.required], // ✅ AGREGAR ESTA LÍNEA
+  constructor() {
+    this.supplierForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['', Validators.required],
+      contactName: [''],
+      email: ['', [Validators.email]],
+      phone: [''],
+      address: [''],
       isActive: [true]
     });
   }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditMode.set(true);
-      this.userId.set(id);
-      this.loadUserData(id);
-      this.userForm.get('password')?.clearValidators();
-      this.userForm.get('password')?.updateValueAndValidity();
-    } else {
-      // ✅ Generar nuevo código solo para crear usuario
-      this.userForm.patchValue({ user_code: this.generateUserCode() });
+      this.supplierId.set(id);
+      this.loadSupplierData(id);
     }
   }
 
-  private generateUserCode(): string {
-    return this.authService.generateTempUserCode();
-  }
-
-  loadUserData(id: string): void {
+  loadSupplierData(id: string): void {
     this.loading.set(true);
-    this.authService.getUserById(id).subscribe({
+    this.supplierService.getSupplierById(id).subscribe({
       next: (response) => {
-        const user = response.data;
-        this.userForm.patchValue({
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          isActive: user.isActive
+        const supplier = response.data;
+        this.supplierForm.patchValue({
+          name: supplier.name,
+          contactName: supplier.contactName,
+          email: supplier.email,
+          phone: supplier.phone,
+          address: supplier.address,
+          isActive: supplier.isActive
         });
         this.loading.set(false);
       },
       error: (error) => {
-        console.error('Error loading user:', error);
-        this.errorMessage.set('Error al cargar datos del usuario');
+        console.error('Error loading supplier:', error);
+        this.errorMessage.set('Error al cargar datos del proveedor');
         this.loading.set(false);
       }
     });
   }
 
   onSubmit(): void {
-    if (this.userForm.valid) {
+    if (this.supplierForm.valid) {
       this.loading.set(true);
       this.errorMessage.set('');
 
-      if (this.isEditMode() && this.userId()) {
-        this.updateUser();
+      if (this.isEditMode() && this.supplierId()) {
+        this.updateSupplier();
       } else {
-        this.createUser();
+        this.createSupplier();
       }
     }
   }
 
-  private createUser(): void {
-    const userData: CreateUserRequest = this.userForm.value;
-    this.authService.createUser(userData).subscribe({
+  private createSupplier(): void {
+    const supplierData: CreateSupplierRequest = this.supplierForm.value;
+    this.supplierService.createSupplier(supplierData).subscribe({
       next: (response) => {
-        this.router.navigate(['/auth/usuarios']);
+        this.router.navigate(['/suppliers/proveedores']);
       },
       error: (error) => {
-        console.error('Error creating user:', error);
-        this.errorMessage.set(error.error?.message || 'Error al crear usuario');
+        console.error('Error creating supplier:', error);
+        this.errorMessage.set(error.error?.message || 'Error al crear proveedor');
         this.loading.set(false);
       }
     });
   }
 
-  private updateUser(): void {
-    const userData: UpdateUserRequest = this.userForm.value;
-    // Si no se proporciona nueva contraseña, eliminar el campo
-    if (!userData.password) {
-      delete userData.password;
-    }
-
-    this.authService.updateUser(this.userId()!, userData).subscribe({
+  private updateSupplier(): void {
+    const supplierData: UpdateSupplierRequest = this.supplierForm.value;
+    this.supplierService.updateSupplier(this.supplierId()!, supplierData).subscribe({
       next: (response) => {
-        this.router.navigate(['/auth/usuarios']);
+        this.router.navigate(['/proveedores']);
       },
       error: (error) => {
-        console.error('Error updating user:', error);
-        this.errorMessage.set(error.error?.message || 'Error al actualizar usuario');
+        console.error('Error updating supplier:', error);
+        this.errorMessage.set(error.error?.message || 'Error al actualizar proveedor');
         this.loading.set(false);
       }
     });
