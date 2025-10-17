@@ -74,6 +74,22 @@ import { RouterLink } from '@angular/router';
                     </div>
                   </a>
 
+                  <!-- Referencias de Productos -->
+                  <a 
+                    routerLink="/product-references/referencias" 
+                    class="bg-white/10 backdrop-blur-md rounded-2xl p-6 hover:bg-white/15 hover:shadow-xl transition-all duration-300 group border border-white/20 hover:border-indigo-400/30"
+                  >
+                    <div class="text-center">
+                      <div class="w-16 h-16 bg-gradient-to-r from-indigo-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                      </div>
+                      <h3 class="text-white text-xl font-semibold mb-2">Referencias</h3>
+                      <p class="text-gray-300">Gestión de referencias</p>
+                    </div>
+                  </a>
+
                   <!-- Auditoría -->
                   <a 
                     routerLink="/auditoria" 

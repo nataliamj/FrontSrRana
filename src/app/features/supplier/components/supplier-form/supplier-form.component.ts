@@ -130,7 +130,7 @@ import { HeaderComponent } from '../../../../shared/components/header/header.com
                   <div class="flex items-center justify-between pt-6">
                     <button
                       type="button"
-                      routerLink="/proveedores"
+                      routerLink="'/suppliers/proveedores'"
                       class="px-6 py-3 text-gray-300 hover:text-white transition-colors rounded-xl hover:bg-white/10 border border-gray-600"
                     >
                       Cancelar

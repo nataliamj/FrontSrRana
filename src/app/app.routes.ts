@@ -22,6 +22,12 @@ export const routes: Routes = [
     loadChildren: () => import('./features/material/material.module').then(m => m.MaterialsModule)
     },
 
+    // Agregar esta ruta a tus rutas principales
+    {
+    path: 'product-references',
+    loadChildren: () => import('./features/product-reference/product-reference.module').then(m => m.ProductReferencesModule)
+    },
+
 
     { 
         path: '', 
