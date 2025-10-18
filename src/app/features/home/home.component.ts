@@ -90,6 +90,22 @@ import { RouterLink } from '@angular/router';
                     </div>
                   </a>
 
+                  <!-- Lotes de Producción -->
+                  <a 
+                    routerLink="/production-batches/lotes" 
+                    class="bg-white/10 backdrop-blur-md rounded-2xl p-6 hover:bg-white/15 hover:shadow-xl transition-all duration-300 group border border-white/20 hover:border-orange-400/30"
+                  >
+                    <div class="text-center">
+                      <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                      </div>
+                      <h3 class="text-white text-xl font-semibold mb-2">Lotes</h3>
+                      <p class="text-gray-300">Gestión de producción</p>
+                    </div>
+                  </a>
+
                   <!-- Auditoría -->
                   <a 
                     routerLink="/auditoria" 

@@ -16,16 +16,21 @@ export const routes: Routes = [
         loadChildren: () => import('./features/supplier/supplier.routes').then(m => m.suppliersRoutes)
     },
 
-    // Agregar esta ruta a tus rutas principales
+    
     {
-    path: 'materials',
-    loadChildren: () => import('./features/material/material.module').then(m => m.MaterialsModule)
+        path: 'materials',
+        loadChildren: () => import('./features/material/material.module').then(m => m.MaterialsModule)
     },
 
-    // Agregar esta ruta a tus rutas principales
+   
     {
-    path: 'product-references',
-    loadChildren: () => import('./features/product-reference/product-reference.module').then(m => m.ProductReferencesModule)
+        path: 'product-references',
+        loadChildren: () => import('./features/product-reference/product-reference.module').then(m => m.ProductReferencesModule)
+    },
+
+    {
+        path: 'production-batches',
+        loadChildren: () => import('./features/production-batch/production-batch.module').then(m => m.ProductionBatchesModule)
     },
 
 
