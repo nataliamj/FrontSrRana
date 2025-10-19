@@ -71,4 +71,8 @@ export class MaterialService {
       {}
     );
   }
+
+  getMaterialBatches(materialId: string): Observable<{success: boolean; data: any[]}> {
+    return this.http.get<{success: boolean; data: any[]}>(`${this.apiUrl}/materials/${materialId}/batches`);
+}
 }

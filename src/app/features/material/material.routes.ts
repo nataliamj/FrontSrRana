@@ -24,5 +24,13 @@ export const materialsRoutes: Routes = [
       import('./components/material-form/material-form.component')
         .then(c => c.MaterialFormComponent),
     canActivate: [authGuard, roleGuard([UserRole.ADMIN, UserRole.SUPERVISOR, UserRole.BODEGA])]
+  },
+
+  {
+    path: 'materiales/detalle/:id',
+    loadComponent: () => 
+      import('./components/material-detail/material-detail.component')
+        .then(c => c.MaterialDetailComponent),
+    canActivate: [authGuard, roleGuard([UserRole.ADMIN, UserRole.SUPERVISOR, UserRole.BODEGA, UserRole.OPERARIO])]
   }
 ];

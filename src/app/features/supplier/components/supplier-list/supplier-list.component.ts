@@ -8,7 +8,7 @@ import { Supplier } from '../../models/supplier.model';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar.component';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { HasPermissionDirective } from '../../../../shared/directives/has-permission.directive';
-import { Permission, UserRole } from '../../../auth/models/user.model'; // ✅ Importar Permission
+import { Permission, UserRole } from '../../../auth/models/user.model';
 
 @Component({
   selector: 'app-suppliers-list',
@@ -241,7 +241,6 @@ export class SuppliersListComponent implements OnInit {
 
 
 
-    // ✅ AGREGAR ESTOS MÉTODOS QUE FALTAN
   hasCreatePermission(): boolean {
     return this.authService.hasAnyRole([UserRole.ADMIN, UserRole.SUPERVISOR, UserRole.BODEGA]);
   }

@@ -177,7 +177,7 @@ export class AuthService {
     this.currentUserSignal.set(null);
     this.isAuthenticatedSignal.set(false); 
     
-    console.log('🔐 Sesión cerrada - Redirigiendo a login');
+    console.log('Sesión cerrada - Redirigiendo a login');
     
 
     this.router.navigate(['/auth/login']);

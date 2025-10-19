@@ -10,6 +10,8 @@ export interface Material {
   isActive: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  reservedStock?: number;
+  availableStock?: number;
 }
 
 export interface CreateMaterialRequest {

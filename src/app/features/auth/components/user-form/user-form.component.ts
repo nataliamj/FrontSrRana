@@ -174,7 +174,7 @@ export class UserFormComponent implements OnInit {
   readonly userRoles = Object.values(UserRole);
  constructor() {
     this.userForm = this.fb.group({
-      user_code: [this.generateUserCode(), Validators.required], // ✅ AGREGAR ESTA LÍNEA
+      user_code: [this.generateUserCode(), Validators.required],
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -192,7 +192,6 @@ export class UserFormComponent implements OnInit {
       this.userForm.get('password')?.clearValidators();
       this.userForm.get('password')?.updateValueAndValidity();
     } else {
-      // ✅ Generar nuevo código solo para crear usuario
       this.userForm.patchValue({ user_code: this.generateUserCode() });
     }
   }
@@ -251,7 +250,6 @@ export class UserFormComponent implements OnInit {
 
   private updateUser(): void {
     const userData: UpdateUserRequest = this.userForm.value;
-    // Si no se proporciona nueva contraseña, eliminar el campo
     if (!userData.password) {
       delete userData.password;
     }

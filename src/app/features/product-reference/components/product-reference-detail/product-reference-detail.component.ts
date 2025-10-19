@@ -176,7 +176,6 @@ export class ProductReferenceDetailComponent implements OnInit {
   reference = signal<ProductReference | null>(null);
   loading = signal(true);
 
-  // ✅ CORREGIDO: Computed properties para evitar errores de undefined
   measurements = computed<ReferenceMeasurement[]>(() => 
     this.reference()?.measurements || []
   );
@@ -206,7 +205,6 @@ export class ProductReferenceDetailComponent implements OnInit {
     });
   }
 
-  // ✅ Función auxiliar para obtener inicial del material
   getMaterialInitial(materialName?: string): string {
     return materialName?.charAt(0) || 'M';
   }
